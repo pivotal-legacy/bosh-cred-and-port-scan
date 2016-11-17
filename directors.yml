@@ -1,0 +1,11 @@
+---
+teams:
+- name: team1-name
+  directors:
+  - fully.qualified.domain.name
+  - 52.11.22.33
+
+- name: team2-name
+  directors:
+  - fully.qualified.domain.name
+  - 52.11.22.33
