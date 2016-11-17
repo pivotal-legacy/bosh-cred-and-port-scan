@@ -56,7 +56,7 @@ def scan_hm(director)
 end
 
 def scan_postgres(director)
-  port = port_open(director, "5452")
+  port = port_open(director, "5432")
   Result.new(port, nil)
 end
 
