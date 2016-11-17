@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# coding: utf-8
 
 require "yaml"
 
@@ -11,23 +12,23 @@ class Result
   end
 
   def to_s
-    output = ""
+    output = []
 
     if port_open
-      output += "port: \e[0;31mopen\e[0;0m "
+      output << "port: \e[0;31mopen\e[0;0m"
     else
-      output += "port: \e[0;32mclosed\e[0;0m "
+      output << "port: \e[0;32mclosed\e[0;0m"
     end
 
     if default_creds == nil
-      output += "creds: \e[1;33m~\e[0;0m"
+      output << "creds: \e[1;33m~\e[0;0m"
     elsif default_creds == true
-      output += "creds: \e[0;31m✗\e[0;0m"
+      output << "creds: \e[0;31m✗\e[0;0m"
     else
-      output += "creds: \e[0;32m✓\e[0;0m"
+      output << "creds: \e[0;32m✓\e[0;0m"
     end
 
-    output
+    output.join(", ")
   end
 end
 
@@ -87,7 +88,8 @@ def scan_blobstore(director, user, password)
   Result.new(port, user)
 end
 
-manifest = YAML.load_file("directors.yml")
+manifest_path = ARGV[0] || "directors.yml"
+manifest = YAML.load_file manifest_path
 teams = manifest.fetch("teams")
 
 def report(result, name)
