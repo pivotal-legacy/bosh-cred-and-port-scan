@@ -4,6 +4,9 @@
 WAIT_ARG = RbConfig::CONFIG['host_os'] =~ /linux/ ? "w" : "G"
 TIMEOUT = 2
 
+`which nats-pub`
+raise "install nats-pub please" unless $?.success?
+
 class Result
   attr_reader :port_open, :default_creds
 
