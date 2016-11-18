@@ -28,6 +28,8 @@ teams.each do |team|
     report(scan_blobstore(director, "director", "director-password"), "blobstore director/director-password")
     report(scan_blobstore(director, "agent", "agent-password"), "blobstore agent/agent-password")
     report(scan_registry(director, "admin", "admin"), "registry admin/admin")
+    report(scan_redis(director), "redis")
+    report(scan_hm_http(director), "hm http")
 
     puts
   end

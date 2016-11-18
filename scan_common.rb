@@ -98,6 +98,15 @@ def scan_registry(director, user, password)
   Result.new(port, user)
 end
 
+def scan_redis(director)
+  port = port_open(director, "25255")
+  Result.new(port, nil)
+end
+
+def scan_hm_http(director)
+  port = port_open(director, "25923")
+  Result.new(port, nil)
+end
+
 # TODO: redis 25255 https://bosh.io/jobs/redis?source=github.com/cloudfoundry/bosh&version=152
 # TODO: hm 25923 https://bosh.io/jobs/health_monitor?source=github.com/cloudfoundry/bosh&version=152#p=hm.http.port
-
