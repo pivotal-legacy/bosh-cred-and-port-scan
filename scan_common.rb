@@ -42,7 +42,7 @@ end
 def scan_user(director)
   port = port_open(director, "25555")
 
-  `curl -k -s -f -m #{TIMEOUT} --user admin:admin https://#{director}:25555/deployments`
+  `curl -k -s -f -m #{TIMEOUT} --user "admin:admin" https://#{director}:25555/deployments`
   user = $?.success?
 
   Result.new(port, user)
@@ -51,7 +51,7 @@ end
 def scan_hm(director)
   port = port_open(director, "25555")
 
-  `curl -k -s -f -m #{TIMEOUT} --user hm:hm-password https://#{director}:25555/deployments`
+  `curl -k -s -f -m #{TIMEOUT} --user "hm:hm-password" https://#{director}:25555/deployments`
   user = $?.success?
 
   Result.new(port, user)
@@ -83,7 +83,7 @@ end
 def scan_blobstore(director, user, password)
   port = port_open(director, "25250")
 
-  `curl -k -s -f -m #{TIMEOUT} --user #{user}:#{password} http://#{director}:25250`
+  `curl -k -s -f -m #{TIMEOUT} --user "#{user}:#{password}" http://#{director}:25250`
   user = $?.success?
 
   Result.new(port, user)
