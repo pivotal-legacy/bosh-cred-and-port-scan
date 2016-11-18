@@ -2,6 +2,7 @@
 # this is included in both scanning scripts
 
 WAIT_ARG = RbConfig::CONFIG['host_os'] =~ /linux/ ? "w" : "G"
+TIMEOUT = 2
 
 class Result
   attr_reader :port_open, :default_creds
@@ -41,7 +42,7 @@ end
 def scan_user(director)
   port = port_open(director, "25555")
 
-  `curl -k -s -f -m 5 --user admin:admin https://#{director}:25555/deployments`
+  `curl -k -s -f -m #{TIMEOUT} --user admin:admin https://#{director}:25555/deployments`
   user = $?.success?
 
   Result.new(port, user)
@@ -50,7 +51,7 @@ end
 def scan_hm(director)
   port = port_open(director, "25555")
 
-  `curl -k -s -f -m 5 --user hm:hm-password https://#{director}:25555/deployments`
+  `curl -k -s -f -m #{TIMEOUT} --user hm:hm-password https://#{director}:25555/deployments`
   user = $?.success?
 
   Result.new(port, user)
@@ -73,7 +74,7 @@ end
 def scan_agent(director, username, password)
   port = port_open(director, "6868")
 
-  `curl -k -f -s -m 5 -X POST --user "#{username}:#{password}" -d '{"method":"ping","arguments":[],"reply_to":""}' "https://#{director}:6868/agent"`
+  `curl -k -f -s -m #{TIMEOUT} -X POST --user "#{username}:#{password}" -d '{"method":"ping","arguments":[],"reply_to":""}' "https://#{director}:6868/agent"`
   user = $?.success?
 
   Result.new(port, user)
@@ -82,7 +83,7 @@ end
 def scan_blobstore(director, user, password)
   port = port_open(director, "25250")
 
-  `curl -k -s -f -m 5 --user #{user}:#{password} https://#{director}:25250`
+  `curl -k -s -f -m #{TIMEOUT} --user #{user}:#{password} http://#{director}:25250`
   user = $?.success?
 
   Result.new(port, user)
@@ -91,8 +92,12 @@ end
 def scan_registry(director, user, password)
   port = port_open(director, "25777")
 
-  `curl -k -s -f -m 5 --user #{user}:#{password} https://#{director}:25777`
+  `curl -k -s -f -m #{TIMEOUT} --user #{user}:#{password} http://#{director}:25777/instances/blah/settings`
   user = $?.success?
 
   Result.new(port, user)
 end
+
+# TODO: redis 25255 https://bosh.io/jobs/redis?source=github.com/cloudfoundry/bosh&version=152
+# TODO: hm 25923 https://bosh.io/jobs/health_monitor?source=github.com/cloudfoundry/bosh&version=152#p=hm.http.port
+
