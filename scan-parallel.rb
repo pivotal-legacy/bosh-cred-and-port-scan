@@ -38,6 +38,7 @@ teams.each_slice(4) do |teams|
       report.call lambda { scan_postgres(director) }, "postgres"
       report.call lambda { scan_blobstore(director, "director", "director-password") }, "blobstore director/director-password"
       report.call lambda { scan_blobstore(director, "agent", "agent-password") }, "blobstore agent/agent-password"
+      report.call lambda { scan_registry(director, "admin", "admin") }, "registry admin/admin"
       
     end
   end

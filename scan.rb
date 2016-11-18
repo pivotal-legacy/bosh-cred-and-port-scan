@@ -27,6 +27,7 @@ teams.each do |team|
     report(scan_postgres(director), "postgres")
     report(scan_blobstore(director, "director", "director-password"), "blobstore director/director-password")
     report(scan_blobstore(director, "agent", "agent-password"), "blobstore agent/agent-password")
+    report(scan_registry(director, "admin", "admin"), "registry admin/admin")
 
     puts
   end

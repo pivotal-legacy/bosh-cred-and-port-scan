@@ -87,3 +87,12 @@ def scan_blobstore(director, user, password)
 
   Result.new(port, user)
 end
+
+def scan_registry(director, user, password)
+  port = port_open(director, "25777")
+
+  `curl -k -s -f -m 5 --user #{user}:#{password} https://#{director}:25777`
+  user = $?.success?
+
+  Result.new(port, user)
+end
