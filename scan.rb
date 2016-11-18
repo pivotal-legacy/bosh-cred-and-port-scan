@@ -3,6 +3,8 @@
 
 require "yaml"
 
+WAIT_ARG = RbConfig::CONFIG['host_os'] =~ /linux/ ? "w" : "G"
+
 class Result
   attr_reader :port_open, :default_creds
 
@@ -33,7 +35,7 @@ class Result
 end
 
 def port_open(director, port)
-  `nc -z -v -G1 #{director} #{port} 2> /dev/null`
+  `nc -z -v -#{WAIT_ARG}1 #{director} #{port} 2> /dev/null`
 
   $?.success?
 end
