@@ -86,10 +86,10 @@ end
 def scan_blobstore(director, user, password)
   port = port_open(director, "25250")
 
-  `curl -k -s -f -m #{TIMEOUT} --user "#{user}:#{password}" http://#{director}:25250`
-  user = $?.success?
+  output = `curl -v -v -k -s -f -m #{TIMEOUT} --user "#{user}:#{password}" http://#{director}:25250/lol 2>&1`
+  authenticated = !!(output =~ /404 Not Found/)
 
-  Result.new(port, user)
+  Result.new(port, authenticated)
 end
 
 def scan_registry(director, user, password)
