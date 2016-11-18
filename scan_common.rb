@@ -16,7 +16,7 @@ class Result
     output = []
 
     if port_open
-      output << "port: \e[0;31mopen\e[0;0m"
+      output << "port: \e[0;31m  open\e[0;0m"
     else
       output << "port: \e[0;32mclosed\e[0;0m"
     end

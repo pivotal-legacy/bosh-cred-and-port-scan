@@ -15,7 +15,7 @@ def report_full(team, director, resultish, name)
              else
                resultish
              end
-    puts "#{team} | #{director} | #{name} #{result}"
+    printf "%-15.15s | %-25.25s | %-40.40s | %s\n", team, director, name, result
     STDOUT.flush
   end
 end
