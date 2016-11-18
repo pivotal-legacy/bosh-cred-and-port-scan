@@ -92,7 +92,7 @@ end
 def scan_registry(director, user, password)
   port = port_open(director, "25777")
 
-  `curl -k -s -f -m #{TIMEOUT} --user #{user}:#{password} http://#{director}:25777/instances/blah/settings`
+  `curl -k -s -f -m #{TIMEOUT} --user "#{user}:#{password}" http://#{director}:25777/instances/blah/settings`
   user = $?.success?
 
   Result.new(port, user)
